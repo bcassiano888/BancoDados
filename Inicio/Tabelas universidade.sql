@@ -91,5 +91,5 @@ constraint fk_tb_pr_liberadora foreign key(cod_dc_liberadora)
 	references tb_disciplina(cod_disciplina)
 	);
 
-)
+
 
