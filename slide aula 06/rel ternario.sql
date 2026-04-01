@@ -116,3 +116,55 @@ constraint fk_tb_dist_cod_cid foreign key (cod_cidade)
 constraint fk_tb_dist_rg foreign key(rg)
 	references tb_distribuidores(rg)
 );
+
+--criando a tb_bairros
+--restrição:
+--pk aplicada a coluna codigo
+
+create table tb_bairros(
+codigo 			integer,
+nm_bairro 		varchar(45),
+nm_cidade 		varchar(45),
+uf				char(2),
+
+constraint pk_tb_bairros_codigo primary key(codigo)
+);
+
+--criando a tb_carteiros
+--restrição
+--pk aplicada a coluna rg
+
+create table tb_carteiros(
+rg 					varchar(11),
+nm_carteiro 		varchar(60),
+dt_nasc 			date,
+
+constraint pk_tb_carteiros_rg primary key(rg)
+);
+
+--criando a tb_correspondencias
+--proveniente do relacionamento 1:1:N 
+-- entre as entidades "correspondencias", "bairros" e "carteiros"
+-- restrições:
+-- pk aplicada a coluna cod_carta
+-- fk aplicada a coluna cod_bairro
+-- fk aplicada a coluna rg
+-- nn aplicada a coluna cod_bairro
+-- nn aplicada a coluna rg
+
+create table tb_correspondencias(
+cod_carta 			integer,
+peso				float,
+cod_bairro 			integer constraint fk_tb_corresp_cod_bairro not null,
+rg 					varchar(11) constraint fk_tb_corresp_rg not null,
+
+constraint pk_tb_corresp_cod_carta primary key(cod_carta),
+
+constraint fk_tb_corresp_cod_bairro foreign key(cod_bairro)
+	references tb_bairros(codigo),
+
+constraint fk_tb_corresp_rg foreign key(rg)
+	references tb_carteiros(rg)
+);
+
+
